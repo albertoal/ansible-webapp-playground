@@ -1,0 +1,10 @@
+- hosts: web
+  remote_user: ubuntu
+  become: yes
+  become_method: sudo
+  gather_facts: True
+  serial: 1
+  vars:
+    ansible_ssh_private_key_file: "Path to your ssh key"
+  roles:
+    - nginx

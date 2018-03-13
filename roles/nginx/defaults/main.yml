@@ -1,0 +1,4 @@
+files: [
+  {src: '/home/ubuntu/ec2-demo/index.html', dest: '/var/www/codecore.io/index.html'},
+  {src: '/home/ubuntu/ec2-demo/codecore.io', dest: '/etc/nginx/sites-available/codecore.io'},
+]

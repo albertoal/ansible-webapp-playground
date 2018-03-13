@@ -1,0 +1,62 @@
+- name: Update repos cache
+  apt:
+    update_cache: yes
+  tags: [nginx]
+    
+- name: Install Git package
+  apt: 
+    name: git
+    force: yes
+  tags: [nginx]
+
+- name: Install Nginx package
+  apt: 
+    name: nginx
+    force: yes
+  tags: [nginx]
+
+- name: Clone Git repo
+  git:
+    repo: 'git://github.com/albertoal/codecore--ec2-demo.git'
+    dest: /home/ubuntu/ec2-demo
+  tags: [nginx]
+
+- name: Create new website root directory
+  file: 
+    path: /var/www/codecore.io
+    state: directory
+    mode: 0755
+  tags: [nginx]
+  
+- name: Copy index.html file and NginX server block files
+  copy:
+    remote_src: yes
+    src: "{{ item.src }}"
+    dest: "{{ item.dest }}"
+    mode: 0755
+  with_items: "{{ files }}"
+  register: copy_result
+  tags: [nginx]
+  
+- name: Create symbolic link on sites-enabled
+  file: 
+    src: /etc/nginx/sites-available/codecore.io
+    dest: /etc/nginx/sites-enabled/codecore.io
+    state: link
+    mode: 0755
+  register: link_result
+  tags: [nginx]  
+  
+- name: Unlink default NginX site from sites-enabled
+  file: 
+    path: /etc/nginx/sites-enabled/default
+    state: absent
+  register: link_result
+  tags: [nginx]   
+
+- name: NginX service is restarted
+  service: 
+    name: nginx
+    state: restarted
+  when: copy_result|changed or link_result|changed
+  tags: [nginx]
