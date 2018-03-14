@@ -1,6 +1,7 @@
 # Ansible NginX webapp playground
-I wanted to play with Ansible so I've created playbook that will deploy a simple NginX webapp similar to [albertoal/codecore--ec2-demo](https://github.com/albertoal/codecore--ec2-demo) but with Ansible instead of ec2 user-data
-Disclaimer: This has only be tested with Ubuntu 16 and I've used Ansible v2.4.3
+I wanted to play with Ansible so I've created a playbook that will deploy a simple NginX webapp similar to [albertoal/codecore--ec2-demo](https://github.com/albertoal/codecore--ec2-demo) but using Ansible instead of the EC2 user-data.
+
+Disclaimer: This playbook has only be tested on Ubuntu 16 and using Ansible v2.4.3
 
 
 ## User Inputs
